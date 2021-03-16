@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import java.awt.*;
 import java.awt.event.*;
+import bots.*;
 
 public class Container extends Canvas implements Runnable
 {
@@ -15,7 +16,7 @@ public class Container extends Canvas implements Runnable
     public static final int WIDTH = 600, HEIGHT = 800;
     private Thread mainLoop;
     private boolean running = false;
-    private BotHandler bots;
+    private BotHandler redTeam, blueTeam;
 
     public Container()
     {
@@ -27,7 +28,7 @@ public class Container extends Canvas implements Runnable
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        bots = new BotHandler(2, 1, 1);
+        redTeam = new BotHandler(2, 1, 1);
 
         running = true;
         mainLoop = new Thread(this);
@@ -37,14 +38,26 @@ public class Container extends Canvas implements Runnable
 
     public void paint(Graphics g)
     {
-        bots.render(g);
+        redTeam.render(g);
+        g.dispose();
+
     }
 
     @Override
     public void run() {
 
-        repaint();
-        
+        repaint();      
+        while(!running)
+        {
+            repaint();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
     }
     
 }
