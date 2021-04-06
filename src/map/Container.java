@@ -15,7 +15,7 @@ public class Container extends Canvas implements Runnable
     private JFrame frame;
     public static final int WIDTH = 600, HEIGHT = 800;
     private Thread mainLoop;
-    private boolean running = false;
+    private static boolean running = false;
     private BotHandler redTeam, blueTeam;
 
     public Container()
@@ -47,17 +47,12 @@ public class Container extends Canvas implements Runnable
     public void run() {
 
         repaint();      
-        while(!running)
-        {
-            repaint();
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+        
+        
+    }
 
+    public static boolean isRunning() {
+        return running;
     }
     
 }

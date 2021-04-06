@@ -3,7 +3,7 @@ package bots;
 import java.awt.*;
 import map.Container;
 
-public class BotHandler {
+public class BotHandler implements Runnable{
 
     private int numberOfDefenders;
     private int numberOfAttackers;
@@ -50,5 +50,14 @@ public class BotHandler {
 
         
 
+    }
+
+    public Move makeMove()
+    {
+        return new Move(1,1,1,1);
+    }
+
+    @Override
+    public void run() {
     }
 }
