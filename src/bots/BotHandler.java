@@ -8,7 +8,14 @@ public class BotHandler implements Runnable{
     private int numberOfDefenders;
     private int numberOfAttackers;
     int[][] attackers, defenders;
-    
+
+    int x,y;
+
+    int fireDirection, fireStrength;
+    boolean toFire = false;
+
+
+    int velocityX = 0, velocityY = 0;
     Color color;
 
     public BotHandler(int numberOfDefenders, int numberOfAttackers, int color)
@@ -52,12 +59,52 @@ public class BotHandler implements Runnable{
 
     }
 
-    public Move makeMove()
+    public void makeMove(Move move)
     {
-        return new Move(1,1,1,1);
+        velocityX = (int)move.velocityX;
+        velocityY = (int)move.velocityY;
+
+        int toFire = true;
+        int fireDirection = (int)move.fireDirection;
+        int fireStrength = (int)move.fireStrength;
+
     }
 
     @Override
     public void run() {
+        x += velocityX;
+        y += velocityY;
+
+        if(toFire)
+        {
+            fire(fireDirection, fireStrength);
+            toFire = false;
+        }
+    }
+
+    private void fire(int fireDirection, int fireStrength) {
+
+        
+
+    }
+
+    class Bullet implements Runnable
+    {
+        int x,y;
+        double velocityX, velocityY;
+
+
+        void render(Graphics g)
+        {
+            g.drawOval(x, y, 10, 10);
+        }
+
+
+        @Override
+        public void run() {
+            x += velocityX;
+            y += velocityY;
+        }
+
     }
 }
