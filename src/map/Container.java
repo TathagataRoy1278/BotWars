@@ -38,17 +38,61 @@ public class Container extends Canvas implements Runnable
 
     public void paint(Graphics g)
     {
-        redTeam.render(g);
-        g.dispose();
+        redTeam.setGraphics(g);
+        redTeam.render();
 
+    }
+
+    private void update()
+    {
+        redTeam.update();
     }
 
     @Override
     public void run() {
+        final short frameRate = 10;
+      
+        long lastTime = System.nanoTime();
+        long timer = System.currentTimeMillis();
+        final double ns = 1000000000 / frameRate;
+        
+        double delta = 0;
+        int frames = 0;
+        
+          
+        while(running)
+        {
+          
+          long now = System.nanoTime();
+          delta += (now-lastTime)/ns;
+    
+          lastTime = now;
+          while(delta >= 1)
+          {
+            update();
+            render();
+              delta--;
+          }
+          
+          //render();
+          frames++;
+    
+          if(System.currentTimeMillis()-timer > 1000){
+              timer+=1000;
+              this.frame.setTitle(title + " " +  frames + "fps");
+              frames = 0;
+          }
+    
+        }
+    
+        stop();
+    
+    }
 
-        repaint();      
-        
-        
+    private void stop()
+    {
+        g.dispose();
+        running = false;
     }
 
     public static boolean isRunning() {

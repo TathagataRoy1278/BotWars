@@ -3,7 +3,7 @@ package bots;
 import java.awt.*;
 import map.Container;
 
-public class BotHandler implements Runnable{
+public class BotHandler{
 
     private int numberOfDefenders;
     private int numberOfAttackers;
@@ -13,10 +13,13 @@ public class BotHandler implements Runnable{
 
     int fireDirection, fireStrength;
     boolean toFire = false;
-
+    Bullet bullet  = null;
 
     int velocityX = 0, velocityY = 0;
+
     Color color;
+    Graphics g;
+
 
     public BotHandler(int numberOfDefenders, int numberOfAttackers, int color)
     {
@@ -27,9 +30,16 @@ public class BotHandler implements Runnable{
             attackers = new int[numberOfAttackers][2];
             defenders = new int[numberOfDefenders][2];
 
+
     }
 
-    public void render(Graphics g)
+    public void setGraphics(Graphics g)
+    {
+        this.g = g;
+    }
+
+
+    public void init()
     {
 
         g.setColor(color);
@@ -64,14 +74,14 @@ public class BotHandler implements Runnable{
         velocityX = (int)move.velocityX;
         velocityY = (int)move.velocityY;
 
-        int toFire = true;
-        int fireDirection = (int)move.fireDirection;
+        boolean toFire = true;
+        double fireDirection = move.fireDirection;
         int fireStrength = (int)move.fireStrength;
 
     }
 
-    @Override
-    public void run() {
+    
+    public void update() {
         x += velocityX;
         y += velocityY;
 
@@ -80,28 +90,41 @@ public class BotHandler implements Runnable{
             fire(fireDirection, fireStrength);
             toFire = false;
         }
-    }
 
-    private void fire(int fireDirection, int fireStrength) {
-
-        
+        if(bullet!=null)
+            bullet.update();
 
     }
 
-    class Bullet implements Runnable
+    private void fire(double fireDirection, int fireStrength) {
+        Bullet bullet = new Bullet(fireStrength, fireDirection, g);
+
+    }
+
+    class Bullet
     {
         int x,y;
+        int size = 10;
         double velocityX, velocityY;
+        Graphics g;
 
-
-        void render(Graphics g)
+        public Bullet(int fireStrength, double fireDirection, Graphics g)
         {
-            g.drawOval(x, y, 10, 10);
+            this.g = g;
+        }
+
+        void render()
+        {
+            g.setColor(Color.BLACK);
+            g.drawOval(x, y, size, size);
         }
 
 
-        @Override
-        public void run() {
+        public void update() {
+
+            g.setColor(Container.bgcolor);
+            g.drawOval(x, y, size, size);
+
             x += velocityX;
             y += velocityY;
         }
