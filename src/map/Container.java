@@ -18,6 +18,10 @@ public class Container extends Canvas implements Runnable
     private static boolean running = false;
     private BotHandler redTeam, blueTeam;
 
+    Graphics g;
+
+    final public static Color bgColor = Color.WHITE;
+
     public Container()
     {
         frame = new JFrame();
@@ -38,6 +42,7 @@ public class Container extends Canvas implements Runnable
 
     public void paint(Graphics g)
     {
+        this.g = g;
         redTeam.setGraphics(g);
         redTeam.render();
 
@@ -46,6 +51,17 @@ public class Container extends Canvas implements Runnable
     private void update()
     {
         redTeam.update();
+    }
+
+    private void render()
+    {
+        redTeam.render();
+
+        removeAllComponents();
+    }
+
+    private void removeAllComponents() {
+        g.fillRect(0, 0, WIDTH, HEIGHT);
     }
 
     @Override
@@ -79,7 +95,7 @@ public class Container extends Canvas implements Runnable
     
           if(System.currentTimeMillis()-timer > 1000){
               timer+=1000;
-              this.frame.setTitle(title + " " +  frames + "fps");
+              this.frame.setTitle("CTF" + " " +  frames + "fps");
               frames = 0;
           }
     

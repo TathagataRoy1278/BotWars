@@ -39,7 +39,7 @@ public class BotHandler{
     }
 
 
-    public void init()
+    public void render()
     {
 
         g.setColor(color);
@@ -62,6 +62,7 @@ public class BotHandler{
         }
 
     }
+
 
     public void attach() {
 
@@ -94,6 +95,7 @@ public class BotHandler{
         if(bullet!=null)
             bullet.update();
 
+
     }
 
     private void fire(double fireDirection, int fireStrength) {
@@ -122,7 +124,7 @@ public class BotHandler{
 
         public void update() {
 
-            g.setColor(Container.bgcolor);
+            g.setColor(Container.bgColor);
             g.drawOval(x, y, size, size);
 
             x += velocityX;

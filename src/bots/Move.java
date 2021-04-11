@@ -14,4 +14,6 @@ public class Move {
         this.fireStrength = fireStrength;
     }
 
+    
+
 }
