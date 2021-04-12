@@ -32,7 +32,8 @@ public class Container extends Canvas implements Runnable
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        redTeam = new BotHandler(2, 1, 1);
+        redTeam = new BotHandler(1, 2, 1);
+        blueTeam = new BotHandler(1, 2, 0);
 
         running = true;
         mainLoop = new Thread(this);
@@ -46,6 +47,9 @@ public class Container extends Canvas implements Runnable
         redTeam.setGraphics(g);
         redTeam.render();
 
+        blueTeam.setGraphics(g);
+        blueTeam.render();
+
     }
 
     private void update()
@@ -56,6 +60,7 @@ public class Container extends Canvas implements Runnable
     private void render()
     {
         redTeam.render();
+        blueTeam.render();
 
         removeAllComponents();
     }

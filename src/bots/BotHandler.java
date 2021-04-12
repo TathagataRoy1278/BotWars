@@ -42,37 +42,44 @@ public class BotHandler{
     public void render()
     {
 
-        g.setColor(color);
-        for(int i = 0;i<numberOfDefenders;i++)
+        if(color.getBlue() == 255)
         {
-            defenders[i] = new Bot((int)(Math.random()*Container.WIDTH), (int)(Math.random()*Container.HEIGHT/8), 0);
-            defenders[i].render(g);
-        }
+            g.setColor(color);
+            defenders[0] = new Bot(Container.WIDTH/2, Container.HEIGHT/8, 0);
+            defenders[0].render(g);
 
-        for(int i = 0;i<numberOfAttackers;i++)
+            attackers[0] = new Bot(Container.WIDTH/4, Container.HEIGHT/8, 1);
+            attackers[0].render(g);
+            
+            attackers[1] = new Bot(Container.WIDTH*3/4, Container.HEIGHT/8, 1);
+            attackers[1].render(g);
+        }
+        else
         {
-            attackers[i] = new Bot((int)(Math.random()*Container.WIDTH), (int)(Math.random()*Container.HEIGHT/8), 1);
-            attackers[i].render(g);
+            g.setColor(color);
+            defenders[0] = new Bot(Container.WIDTH/2, Container.HEIGHT*7/8, 0);
+            defenders[0].render(g);
+
+            attackers[0] = new Bot(Container.WIDTH/4, Container.HEIGHT*7/8, 0);
+            attackers[0].render(g);
+            
+            attackers[1] = new Bot(Container.WIDTH*3/4, Container.HEIGHT*7/8, 0);
+            attackers[1].render(g);
 
         }
-
+ 
     }
 
 
     public void attach() {
-
         
-
     }
 
     public void makeMove(int botType, int botNumber, Move move)
     {
-        velocityX = (int)move.velocityX;
-        velocityY = (int)move.velocityY;
+        if(botType==0)
+            defenders[botNumber].makeMove(move);
 
-        boolean toFire = true;
-        double fireDirection = move.fireDirection;
-        int fireStrength = (int)move.fireStrength;
 
     }
 
@@ -89,6 +96,7 @@ public class BotHandler{
 
         if(bullet!=null)
             bullet.update();
+
 
 
     }
